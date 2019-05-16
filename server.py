@@ -1,14 +1,29 @@
 import errno
 import functools
 import socket
+import datetime
 
 import tornado.ioloop
 from tornado.iostream import IOStream
+
+from model import VoterModel, get_db_instance
 
 MSG_HEADER_LEN = 16
 MSG_CONTROL_POSITION = (0, 1)
 MSG_CONTROL = bytes([0x1e, 0xdc])
 MSG_LEN_POSITION = (12, 13)
+
+
+async def test():
+    # t = await VoterModel.create(
+    #     user_id=1,
+    #     quest_id=2,
+    #     item_id=3,
+    #     created_time=datetime.datetime.now(),
+    #     updated_time=datetime.datetime.now()
+    # )
+    t = await VoterModel.select().first()
+    print(t)
 
 
 async def handle_connection(connection, address):
@@ -42,6 +57,8 @@ async def handle_connection(connection, address):
             print(e)
             message = ''
 
+    await test()
+
 
 def connection_ready(sock, fd, events):
     while True:
@@ -54,6 +71,10 @@ def connection_ready(sock, fd, events):
         connection.setblocking(0)
         io_loop = tornado.ioloop.IOLoop.current()
         io_loop.spawn_callback(handle_connection, connection, address)
+
+
+
+
 
 if __name__ == '__main__':
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)

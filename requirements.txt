@@ -1,0 +1,4 @@
+ipython==7.5.0
+tormysql==0.4.2
+tornado==6.0.2
+torpeewee==1.0.1
