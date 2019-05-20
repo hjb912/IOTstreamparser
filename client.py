@@ -14,7 +14,6 @@ async def connect(host="localhost", port=8888):
     #answer = await stream.read_until_close()
     #answer = answer.decode("utf8")
     print('answer')
-    await stream.write(key)
     #stream.close()
 
 if __name__ == "__main__":
